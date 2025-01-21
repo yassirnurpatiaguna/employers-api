@@ -1,0 +1,7 @@
+https://medium.com/@mtalhanasir96/building-your-first-rest-api-with-node-js-express-and-sequelize-b041f9910b8a
+
+https://sequelize.org/docs/v6/
+
+https://expressjs.com/en/guide/database-integration.html#postgresql
+
+https://www.postgresql.org/docs/current/functions-conditional.html

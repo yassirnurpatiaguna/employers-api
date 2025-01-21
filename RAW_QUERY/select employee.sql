@@ -1,0 +1,1 @@
+Select id,nik,name,is_active,start_date,end_date from employee;
