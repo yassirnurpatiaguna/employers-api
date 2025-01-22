@@ -5,3 +5,7 @@ https://sequelize.org/docs/v6/
 https://expressjs.com/en/guide/database-integration.html#postgresql
 
 https://www.postgresql.org/docs/current/functions-conditional.html
+
+https://medium.com/@techsuneel99/validate-incoming-requests-in-node-js-like-a-pro-95fbdff4bc07
+
+https://joi.dev/api/?v=17.13.3
