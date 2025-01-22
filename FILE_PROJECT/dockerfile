@@ -1,0 +1,20 @@
+
+FROM node:18
+
+
+WORKDIR /FILE_PROJECT
+# Install netcat (nc) in the app container
+RUN apt-get update && apt-get install -y netcat
+
+# Copy package.json and package-lock.json
+COPY package.json package-lock.json ./
+# Install dependencies
+RUN npm install
+
+# Copy the application code
+COPY . .
+
+# Expose the application port
+EXPOSE ${NODE_DOCKER_PORT}
+
+CMD ["node", "server"]

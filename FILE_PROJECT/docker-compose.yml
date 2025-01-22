@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  postgresdb:
+    image: postgres:latest
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "${POSTGRESDB_LOCAL_PORT}:${POSTGRESDB_DOCKER_PORT}"
+    volumes:
+      - db:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Ensures database initialization on first run
+    networks:
+      - app-network
+
+  app:
+    depends_on:
+      - postgresdb  # Ensure app starts after postgresdb
+    build: ./
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "${NODE_LOCAL_PORT}:${NODE_DOCKER_PORT}"
+    environment:
+      DB_HOST: postgresdb  # Use the name of the Postgres service
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_PORT: ${POSTGRESDB_DOCKER_PORT}
+    stdin_open: true
+    tty: true
+    networks:
+      - app-network
+    command: ["./wait-for-it.sh", "postgresdb:5432", "--", "npm", "start"]  # Wait for postgresdb to be ready
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db:  # Persists the PostgreSQL data
